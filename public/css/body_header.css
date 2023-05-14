@@ -1,0 +1,24 @@
+body {
+    max-height: auto;
+}
+
+.navbar {
+    height: 60px;
+}
+
+.logo-2 {
+    width: 162px;
+    height: 40px;
+}
+
+.pink-color {
+    color: #C32270;
+}
+
+.decor-none {
+    text-decoration: none;
+}
+
+.logout {
+    margin-top: 5px;
+}

@@ -1,0 +1,184 @@
+.left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 787px;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    z-index: 9999;
+    background-repeat: no-repeat;
+    background-image: url(../assets/img/login.png)
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(195, 34, 112, 0.7);
+    opacity: 0.9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+    position: absolute;
+    left: 26.06%;
+    right: 56.94%;
+    top: 42.48%;
+    bottom: 47.27%;
+    width: 432px;
+    height: 105px;
+    background-repeat: no-repeat;
+    background: url(../assets/logo/logo-white.png);
+}
+
+.right {
+    position: fixed;
+    top: 0;
+    width: 653px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    right: 0;
+}
+
+.nar {
+    position: absolute;
+    left: 9.33%;
+    right: 8.33%;
+    top: 5.33%;
+    bottom: 8.33%;
+    text-decoration: none;
+}
+
+.nar-color {
+    color: #C32270;
+}
+
+.nar-decor {
+    text-decoration: none;
+}
+
+.logo-white {
+    position: absolute;
+    width: 428px;
+    height: 104px;
+    top: 95px;
+    background: url(../assets/logo/logo-pink.png)
+}
+
+.welcome {
+    position: absolute;
+    width: 338px;
+    height: 23px;
+    top: 220px;
+    text-align: center;
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.container {
+    position: absolute;
+    margin-top: 230px;
+    width: 543px;
+    left: 50px;
+}
+
+.btn-white {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-left: none;
+}
+
+label {
+    margin-top: 10px;
+}
+
+.btn-none {
+    width: 50px;
+    border: 2px solid gray;
+}
+
+.form-check {
+    margin-top: 10px;
+}
+
+.form-check-input {
+    margin-top: 15px;
+}
+
+.fa-user {
+    color:#BABABA;
+}
+.btn-primary {
+    margin-left: 200px;
+    margin-top: 20px;
+}
+
+.border-right-none {
+    border-right: none;
+}
+
+.border-left-none {
+    border-left: none;
+}
+
+input[type=text],
+input[type=email] {
+    border: 2px solid gray;
+    border-left: none;
+}
+
+input[type=password] ,
+input[type=re-password]{
+    border-left: none;
+    border-right: none;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+}
+
+.btn-pink {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 523px;
+    height: 50px;
+    color: white;
+    font-size: 23px;
+    background-color: #C32270;
+}
+
+.btn-resgiter {
+    margin-top: 40px;
+}
+
+.center {
+    text-align: center;
+}
+
+.center a {
+    display: inline-block;
+}
+
+.fz-18 {
+    font-size: 18px;
+}
+
+button:hover,
+button:focus {
+    background-color: rgb(0, 130, 255);
+    color: white!important;
+    outline-offset: 3px;
+}
+
+button:is(:hover, :focus) {
+    outline-offset: 3px;
+}
