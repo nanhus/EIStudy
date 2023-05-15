@@ -8,9 +8,19 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+
+
+
 
 class UserController extends Controller
 {
+
+
     public function register()
     {
         return view('layouts/register');
@@ -27,9 +37,21 @@ class UserController extends Controller
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'verification_token' => Str::uuid(),
+            'email_verified_at' => now(),
         ]);
+
         $user->save();
+
+        $url = url('/verify-email/' . $user->verification_token);
+        $mail = Mail::to($user->email)->send(new VerifyEmail($url));
+
+        if (!$mail) {
+            Log::error('Failed to send verification email to ' . $user->email);
+            return redirect()->back()->withErrors('Failed to send verification email.');
+        }
+
         return redirect()->route('login')->with('success', 'Registration Success. Please Login !');
     }
 
@@ -44,6 +66,20 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'email' => ['Email or password is incorrect!'],
+            ]);
+        }
+
+        if (!$user->email_verified_at) {
+            throw ValidationException::withMessages([
+                'email' => ['Please verify your email address before logging in.'],
+            ]);
+        }
+
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
