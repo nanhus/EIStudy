@@ -35,9 +35,13 @@
                 @endif
 
                 @if ($errors->any())
-                    @foreach ($errors->all() as $err)
-                        <p class="alert alert-danger"> {{ $err }}</p>
-                    @endforeach
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
                 <form method="POST" action="{{ route('login.action') }}">
@@ -88,7 +92,7 @@
 
     <!-- Link to Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js
-                                    "></script>
+                                        "></script>
     <script src="{{ asset('js/show_password.js') }}"></script>
 </body>
 

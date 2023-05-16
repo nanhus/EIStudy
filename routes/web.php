@@ -27,17 +27,12 @@ Route::post('register', [UserController::class, 'register_action'])->name('regis
 
 Route::get('login', [UserController::class, "login"])->name('login');
 
+Route::get('/verify-email/{token}', [UserController::class, "email_verified_at"])->name('verify_email')->middleware('guest');
+
 Route::post('login', [UserController::class, 'login_action'])->name('login.action');
 
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('home', [HomeController::class, "index"])->name('home');
 
-// Verify email
 
-Route::get('/verify-email/{token}', function (Request $request, $token) {
-    $user = User::where('verification_token', $token)->firstOrFail();
-    $user->email_verified_at = now();
-    $user->save();
-    return redirect()->route('login')->with('success', 'Your email address has been verified. Please login.');
-})->name('verify_email')->middleware('guest');

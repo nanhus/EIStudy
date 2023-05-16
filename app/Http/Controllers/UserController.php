@@ -39,7 +39,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'verification_token' => Str::uuid(),
-            'email_verified_at' => now(),
+            'email_verified_at' => null,
         ]);
 
         $user->save();
@@ -52,7 +52,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors('Failed to send verification email.');
         }
 
-        return redirect()->route('login')->with('success', 'Registration Success. Please Login !');
+        return redirect()->route('login')->with('success', 'Registration Success. Please Verify Email To Login!');
     }
 
     public function login()
@@ -66,27 +66,38 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+    
         $user = User::where('email', $credentials['email'])->first();
-
-        if (!$user) {
+    
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['Email or password is incorrect!'],
+                'email' => ['Email or password is incorrect.'],
             ]);
         }
-
+    
+        // Kiểm tra trạng thái xác thực email
         if (!$user->email_verified_at) {
             throw ValidationException::withMessages([
                 'email' => ['Please verify your email address before logging in.'],
             ]);
         }
-
-
+    
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
+    
             return redirect()->intended('home');
         }
-        return redirect()->back()->withErrors('password', "Wrong email or password!");
+    
+        return redirect()->back()->withErrors(['password' => 'Email or password is incorrect.']);
+    }
+    
+
+    public function email_verified_at(Request $request, $token)
+    {
+        $user = User::where('verification_token', $token)->firstOrFail();
+        $user->email_verified_at = now();
+        $user->save();
+        return redirect()->route('login')->with('success', 'Your email address has been verified.');
     }
 
     public function logout(Request $request)
