@@ -53,19 +53,19 @@
                                 <img src="{{ asset('assets/icon/email_phone.png') }}" alt="email-phone">
                             </button>
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="Enter Email" required>
+                                placeholder="Nhập email" required>
                         </div>
 
                     </div>
                     <div>
-                        <label for="password" class="form-label">Password:</label>
+                        <label for="password" class="form-label">Mật khẩu:</label>
                         <div class="input-group">
                             <button class="btn btn-none border-right-none" type="button">
-                                <img src="./assets/icon/lock.png" alt="lock">
+                                <img src="{{ asset('assets/icon/lock.png') }}" alt="lock">
                             </button>
 
                             <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter password" required>
+                                placeholder="Nhập mật khẩu" required>
                             <button class="btn btn-none border-left-none" type="button" onclick="showPassword()">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -73,11 +73,11 @@
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="remember-me">
-                        <label class="form-check-label" for="remember-me">Remember me</label>
+                        <label class="form-check-label" for="remember-me">Nhớ tài khoản & mật khẩu</label>
                     </div>
                     <button type="submit" class="btn btn-pink">Đăng nhập</button>
 
-                    <div class="center"><a href="#" class="center fz-18">Quên mật khẩu</a></div>
+                    <div class="center"><a href="{{ route('forgot-password')}}" class="center fz-18">Quên mật khẩu</a></div>
                     <div class="mt-2 center">
                         <h5>Bạn chưa có tài khoản. <span><a href="{{ route('register') }}">Đăng ký</a></span></h5>
 

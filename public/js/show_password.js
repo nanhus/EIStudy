@@ -12,10 +12,10 @@ function showPassword() {
 var state2 = false;
 function showRePassword() {
   if (state2) {
-    document.getElementById('re-password').setAttribute('type', "password");
+    document.getElementById('password_confirmation').setAttribute('type', "password");
     state2 = false;
   } else {
-    document.getElementById('re-password').setAttribute("type", "text");
+    document.getElementById('password_confirmation').setAttribute("type", "text");
     state2 = true;
   }
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Reset Password</title>
     <!-- Link to Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/77b9f618ff.js" crossorigin="anonymous"></script>
@@ -26,23 +26,23 @@
             </div>
 
             <div class="logo-white"></div>
-            <div class="welcome">&emsp;Chào mừng bạn đã đến với EI
-                Germany!</div>
 
             <div class="container">
-                <form method="POST" action="{{ route('register.action') }}">
-                    @csrf
-                    <div>
-                        <label for="name" class="form-label">Tên:</label>
-                        <div class="input-group">
-                            <button class="btn btn-none border-right-none" type="button">
-                                <i class="far fa-user fw-bold"></i>
-                            </button>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên" value="{{ old('name') }}" required>
-                        </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
+                @endif
+                @if (session('reset-password'))
+                    <p class="alert alert-success"><b>{{ session('reset-password') }}</b></p>
+                @endif
 
+                <form method="POST" action="{{ route('reset-password') }}">
+                    @csrf
                     <div>
                         <label for="email" class="form-label">Email:</label>
                         <div class="input-group">
@@ -61,7 +61,7 @@
                             </button>
 
                             <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Nhập mật khẩu" required>
+                                placeholder="Nhập mật khẩu mới" required>
                             <button class="btn btn-none border-left-none" type="button" onclick="showPassword()">
                                 <i class="fa-solid fa-eye-slash"></i>
                             </button>
@@ -75,15 +75,15 @@
                                 <img src="{{ asset('assets/icon/lock.png') }}" alt="lock">
                             </button>
 
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
-                                placeholder="Nhập mật khẩu" required>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation" placeholder="Nhập lại mật khẩu" required>
                             <button class="btn btn-none border-left-none" type="button" onclick="showRePassword()">
                                 <i class="fa-solid fa-eye-slash"></i>
                             </button>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-pink btn-resgiter">Đăng ký</button>
+                    <button type="submit" class="btn btn-pink btn-resgiter">Xác nhận</button>
 
             </div>
             </form>
@@ -96,7 +96,7 @@
 
     <!-- Link to Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js
-                        "></script>
+                            "></script>
     <script src="{{ asset('js/show_password.js') }}"></script>
 </body>
 

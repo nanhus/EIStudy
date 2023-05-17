@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
+use App\Http\Controllers\ResetPasswordController;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use App\Models\User;
 */
 
 
-Route::get("/", [IndexController::class, "index"]);
+Route::get("/", [IndexController::class, "index"])->name('/');
 
 Route::get('register', [UserController::class, "register"])->name('register');
 
@@ -35,4 +36,16 @@ Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('home', [HomeController::class, "index"])->name('home');
 
+Route::get('forgot-password', [ResetPasswordController::class, 'forgotPassword'])->name('forgot-password');
 
+Route::post("forgot-password/otp",[ResetPasswordController::class, 'getOTP'])->name('get-otp');
+
+Route::get("forgot-password/otp/verify", [ResetPasswordController::class, 'getVerifyOTP'])->name('get-verify-otp');
+
+Route::post("forgot-password/otp/verify/success/", [ResetPasswordController::class, 'verifyOTP'])->name('verify-otp');
+
+Route::get("forgot-password/otp/verify/success/reset-password", [ResetPasswordController::class, 'getResetPassword'])
+->name('get-reset-password');
+
+Route::post("forgot-password/otp/verify/success/reset-password/success", [ResetPasswordController::class, 'resetPassword'])
+->name('reset-password');

@@ -32,7 +32,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required | unique:tb_user',
             'password' => 'required',
-            're-password' => 'required | same:password'
+            'password_confirmation' => 'required | same:password'
         ]);
         $user = new User([
             'name' => $request->name,
@@ -49,10 +49,10 @@ class UserController extends Controller
 
         if (!$mail) {
             Log::error('Failed to send verification email to ' . $user->email);
-            return redirect()->back()->withErrors('Failed to send verification email.');
+            return redirect()->back()->withErrors('Không thể gửi email xác minh.');
         }
 
-        return redirect()->route('login')->with('success', 'Registration Success. Please Verify Email To Login!');
+        return redirect()->route('login')->with('success', 'Đăng ký thành công. Hãy xác minh Email để đăng nhập!');
     }
 
     public function login()
@@ -71,14 +71,14 @@ class UserController extends Controller
     
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['Email or password is incorrect.'],
+                'email' => ['Thông tin tài khoản hoặc mật khẩu không chính xác!'],
             ]);
         }
     
         // Kiểm tra trạng thái xác thực email
         if (!$user->email_verified_at) {
             throw ValidationException::withMessages([
-                'email' => ['Please verify your email address before logging in.'],
+                'email' => ['Vui lòng xác minh địa chỉ email của bạn trước khi đăng nhập.'],
             ]);
         }
     
@@ -88,7 +88,7 @@ class UserController extends Controller
             return redirect()->intended('home');
         }
     
-        return redirect()->back()->withErrors(['password' => 'Email or password is incorrect.']);
+        return redirect()->back()->withErrors(['password' => 'Thông tin tài khoản hoặc mật khẩu không chính xác!']);
     }
     
 
@@ -97,7 +97,7 @@ class UserController extends Controller
         $user = User::where('verification_token', $token)->firstOrFail();
         $user->email_verified_at = now();
         $user->save();
-        return redirect()->route('login')->with('success', 'Your email address has been verified.');
+        return redirect()->route('login')->with('success', 'Địa chỉ email của bạn đã được xác minh.');
     }
 
     public function logout(Request $request)
